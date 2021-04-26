@@ -1,0 +1,104 @@
+<html>
+<head>
+	     <style  type="text/css" media="screen"> 
+        ul  li { 
+        list-style-type:none; 
+        } 
+     </style>
+</head>
+<meta charset="utf-8">
+<script
+			  src="https://code.jquery.com/jquery-3.6.0.min.js"
+			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			  crossorigin="anonymous"></script>
+<body>
+	<table border="1" width="30%" cellpadding="5">
+	<input type="text" name= "bdate" class="bdate"> <br>
+	<button class="otpravka">Poisk</button>
+  <table id="table">
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+
+
+<script>
+	$(document).ready (function () {
+            $("button.otpravka").on("click", function() {
+                var bdateValue =  $('input.bdate').val();
+
+
+              $.ajax({                                                                                
+                  method: "POST",
+                  url: "some.php",
+                  dataType: 'json',
+                  data: { bdate:bdateValue},
+                  success: function(response)
+            {
+
+
+function createTable(objectArray, fields, fieldTitles) {
+  let body = document.getElementsByTagName('body')[0];
+  let tbl = document.createElement('table');
+  let thead = document.createElement('thead');
+  let thr = document.createElement('tr');
+  fieldTitles.forEach((fieldTitle) => {
+    let th = document.createElement('th');
+    th.appendChild(document.createTextNode(fieldTitle));
+    thr.appendChild(th);
+  });
+  thead.appendChild(thr);
+  tbl.appendChild(thead);
+
+  let tbdy = document.createElement('tbody');
+  let tr = document.createElement('tr');
+  objectArray.forEach((object) => {
+    let tr = document.createElement('tr');
+    fields.forEach((field) => {
+      var td = document.createElement('td');
+      td.appendChild(document.createTextNode(object[field]));
+      tr.appendChild(td);
+    });
+    tbdy.appendChild(tr);    
+  });
+  tbl.appendChild(tbdy);
+  body.appendChild(tbl)
+  return tbl;
+}
+
+createTable(response.results, ['id','firt_name','last_name', 'bdate'], ['Ид','Имя','Фамилия','Год'])
+                    $("#mytable").empty(); 
+                    if(response['success']==0) return; 
+                    var res = response['results'];
+                    $.each(res,function(i,row) { 
+                        var newline='';
+                        $.each(row,function(i,val) { 
+                          newline+='<td>'+val+'</td>'; 
+                        });
+                        $("#mytable").append('<tr>'+newline+'</tr>'); 
+                    });
+           }
+                })
+
+            })
+    })
+
+
+
+</script>
+
+</body>
+</html>
